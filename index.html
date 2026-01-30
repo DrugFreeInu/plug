@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Plug</title>
+
+<style>
+html,body{
+  margin:0;
+  height:100%;
+  background:#0b0f12;
+  display:grid;
+  place-items:center;
+}
+
+.system{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  width:min(900px, 95vw);
+  height:min(500px, 80vh);
+}
+
+iframe{
+  width:100%;
+  height:100%;
+  border:none;
+  border-radius:16px;
+  background:#0b0f12;
+}
+</style>
+</head>
+
+<body>
+
+<div class="system">
+  <!-- Plug (control) -->
+  <iframe src="plug.html" id="plugFrame"></iframe>
+
+  <!-- Outlet (receiver) -->
+  <iframe src="outlet.html" id="outletFrame"></iframe>
+</div>
+
+<script>
+const outlet = document.getElementById("outletFrame");
+
+// relay POWER_ON from plug → outlet
+window.addEventListener("message", e => {
+  if (e.data === "POWER_ON") {
+    outlet.contentWindow.postMessage("POWER_ON", "*");
+  }
+});
+</script>
+
+</body>
+</html>
